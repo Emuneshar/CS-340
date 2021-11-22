@@ -2,7 +2,15 @@
 
 
 void *threadOne(){
-    printf("Thread One\n");
+    char buf[SIZ]; 
+    int n;
+    while ((n = read(f1, buf, SIZ)) > 0)
+			if (write(fd[1], buf, n) != n) {
+				write(STDOUT_FILENO, "Can't write to screen", sizeof(msg) - 1);
+				close(f1);
+				close(f2);
+				return 4;
+			}
     return NULL;
 }
 void *threadTwo(){
